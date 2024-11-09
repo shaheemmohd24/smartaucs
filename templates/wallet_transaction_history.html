@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Wallet Transaction History</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            flex-direction: column; /* Align items in a column */
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+            text-align: center;
+            margin: 20px 0; /* Adjusted margin */
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #26aa07; /* Blue color for headers */
+            color: #fff;
+        }
+
+        td {
+            color: #555;
+        }
+
+        /* Back button styling */
+        .back-button {
+            font-size: 16px;
+            color: #26aa07; /* Blue color for the back button */
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wallet Transaction History</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Transaction Type</th>
+                <th>Amount</th>
+                <th>Before Balance</th>
+                <th>After Balance</th>
+                <th>Remarks</th>
+                <th>Transaction Time</th>
+            </tr>
+        </thead>
+        <tbody>
+           <tbody>
+    {% for transaction in transactions %}
+        <tr>
+            <td>{{ transaction[3] }}</td>
+            <td>${{ transaction[2] }}</td>
+            <td>${{ transaction[4] }}</td>
+            <td>${{ transaction[5] }}</td>
+            <td>{{ transaction[6] }}</td>
+            <td>{{ transaction[7] }}</td>
+        </tr>
+    {% endfor %}
+</tbody>
+
+        </tbody>
+    </table>
+
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <div class="back-btn">
+        <a href="../../../">HOME</a>
+    </div>
+    <!-- Back button -->
+    <a class="back-button" href="javascript:history.back()">Back</a>
+</body>
+</html>

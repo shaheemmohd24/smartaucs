@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products in Auction Table</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            flex-direction: column; /* Align items in a column */
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #26aa07;
+            color: #ffffff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .no-winner {
+            font-style: italic;
+            color: #888;
+        }
+
+        .back-btn {
+            margin-top: 20px;
+        }
+
+        .back-btn a {
+            display: block;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #ffffff;
+            color: #26aa07;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .back-btn a:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Auction End Time</th>
+                <th>Base Price</th>
+                <th>Current Bid Price</th>
+                <th>Winner</th>
+                <th>Winning Bid Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for auction in products_in_auction %}
+                <tr>
+                    <td>{{ auction[1] }}</td>
+                    <td>{{ auction[8] }}</td>
+                    <td>${{ auction[12] }}</td>
+                    <td>${{ auction[10] }}</td>
+                    {% if auction[9] %}
+                        <td>User {{ auction[9] }}</td>
+                        <td>${{ auction[10] }}</td>
+                    {% else %}
+                        <td class="no-winner">No Winner</td>
+                        <td class="no-winner">N/A</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button onclick="goBack()">Go Back</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <div class="back-btn">
+        <a href="../../../">HOME</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit User</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: rgba(40, 167, 69, 0.8); /* Green background color with reduced opacity */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            flex-direction: column; /* Align items in a column */
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px; /* Adjusted margin */
+        }
+
+        form {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9); /* White background color with reduced opacity */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            display: block;
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 8px;
+            text-align: left;
+            width: 100%;
+        }
+
+        input {
+            width: calc(100% - 30px);
+            height: 45px;
+            font-size: 16px;
+            color: #555;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            padding: 0 15px;
+            border-radius: 25px;
+            border: 1px solid #ccc;
+            background: #e6e6e6;
+            box-sizing: border-box;
+        }
+
+        input::placeholder {
+            color: #999;
+        }
+
+        input[type="submit"] {
+            width: calc(100% - 30px);
+            font-size: 16px;
+            color: #fff;
+            line-height: 1.2;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: #28a745; /* Green color */
+            border-radius: 25px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background: #218838; /* Darker green on hover */
+        }
+
+        .back-button {
+            width: calc(100% - 30px);
+            font-size: 16px;
+            color: #fff;
+            line-height: 1.2;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: #dc3545; /* Red color for back button */
+            border-radius: 25px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background: #c82333; /* Darker red on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit User</h1>
+    <form method="POST" action="">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" value="{{ user[1] }}" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="{{ user[4] }}" required>
+
+        <label for="address">Address</label>
+        <input type="text" id="address" name="address" value="{{ user[5] }}" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" value="{{ user[2] }}" required>
+
+        <label for="wallet">Add funds to Wallet</label>
+        <input type="text" id="wallet" name="wallet" value="" required>
+
+        <input type="submit" value="Save Changes">
+    </form>
+
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <div class="back-btn">
+        <a href="../../../">HOME</a>
+    </div>
+    <a class="back-button" href="javascript:history.back()">Back</a>
+</body>
+</html>

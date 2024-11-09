@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            flex-direction: column; /* Align items in a column */
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #26aa07;
+            color: #ffffff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .alert {
+            font-size: 16px;
+            color: #fff;
+            background: #28a745;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        form {
+            display: inline; /* Form elements displayed inline */
+        }
+
+        input[type="submit"] {
+            background-color: #26aa07;
+            color: #fff;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #26aa07;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #dc3545;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        a:hover {
+            background-color: #bd2130;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <!-- Display flashed messages as alerts -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="alert">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <table>
+        <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Proof of Document</th>
+            <th>Approve</th>
+        </tr>
+        {% for user_data in pending_seller_data %}
+            <tr>
+                <td>{{ user_data[0] }}</td>
+                <td>{{ user_data[1] }}</td>
+                <td>{{ user_data[2] }}</td>
+                <td>
+                    <a href="{{ url_for('serve_image', filename=user_data[3]) }}" target="_blank">
+                        <img src="{{ url_for('serve_image', filename=user_data[3]) }}" alt="Proof of Document">
+                    </a>
+                </td>
+                <td>
+                    <form method="POST" action="/admin/approve_seller/{{ user_data[0] }}">
+                        <input type="submit" value="Approve">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{{ url_for('logout') }}">Logout</a>
+<button onclick="goBack()">Go Back</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <div class="back-btn">
+        <a href="../../../">HOME</a>
+    </div>
+</body>
+</html>

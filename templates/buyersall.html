@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            flex-direction: column; /* Align items in a column */
+        }
+
+        h1, h2 {
+            font-size: 36px;
+            color: #333;
+            text-align: center;
+            margin: 20px 0; /* Adjusted margin */
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            width: 80%; /* Increased width */
+            margin: 0 auto; /* Center the element */
+        }
+
+        li {
+            background-color: #28a745; /* Green background color */
+            color: #fff; /* White font color */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        a {
+            color: #fff; /* White text color */
+            text-decoration: none;
+            margin-left: 10px;
+            padding: 5px;
+            border-radius: 3px;
+            border: 1px solid #fff; /* White border */
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a:hover {
+            background-color: #fff; /* White background color on hover */
+            color: #28a745; /* Green text color on hover */
+        }
+
+        .back-button {
+            margin-top: 20px;
+        }
+
+        .back-button a {
+            display: block;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #007bff; /* Blue color for back button */
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .back-button a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="back-button">
+        <a href="/admin/dashboard">Back</a>
+    </div>
+
+    <h1>Admin Dashboard</h1>
+
+    <h2>Buyers</h2>
+    <ul>
+        {% for buyer in buyers %}
+            <li>
+                {{ buyer[1] }}
+                <a href="/admin/view/buyer/{{ buyer[0] }}">View</a>
+                <a href="/admin/edit/buyer/{{ buyer[0] }}">Edit</a>
+                <a href="/admin/delete/buyer/{{ buyer[0] }}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+<button onclick="goBack()">Go Back</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <div class="back-btn">
+        <a href="../../../">HOME</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bidding Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            flex-direction: column; /* Align items in a column */
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            font-size: 14px;
+            color: #888;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 200px;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #26aa07;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #497228;
+        }
+
+        .back-btn {
+            margin-top: 20px;
+        }
+
+        .back-btn a {
+            display: block;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #ffffff;
+            color: #26aa07;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .back-btn a:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ product_data[1] }} - Bidding Page</h1>
+
+    <!-- Display Image -->
+    <img src="../image/p/{{ product_data[4] }}" alt="Product Image">
+
+    <p>Description: {{ product_data[2] }}</p>
+    <p>Base Price: ${{ auction_data[7] }}</p>
+    <p>Auction End Time: {{ auction_data[3] }}</p>
+
+    {% if bids %}
+        <h2>All Bids:</h2>
+        <ul>
+            {% for bid in bids %}
+                <li>User {{ bid[6] }} bid ${{ bid[4] }} at {{ bid[3] }}</li>
+            {% endfor %}
+        </ul>
+        <p>Highest Bid: ${{ highest_bid[4] }} by User {{ highest_bid[6] }}</p>
+    {% else %}
+        <p>No bids have been placed on this product.</p>
+    {% endif%}
+
+    {% if current_time >= auction_data[3] %}
+        <!-- Auction has ended, show winner and bid amount -->
+        {% if auction_data[4] %}
+            <p>Winner: User {{ auction_data[4] }}</p>
+            <p>Winning Bid Amount: ${{ auction_data[5] }}</p>
+        {% else %}
+            <p>No Winner</p>
+        {% endif %}
+    {% else %}
+        <!-- Auction is still ongoing, show bid form -->
+        <form method="post" action="">
+            <label for="bid_amount">Bid Amount:</label>
+            <input type="number" step="0.01" name="bid_amount" required>
+            <button type="submit">Place Bid</button>
+        </form>
+    {% endif %}
+
+    <div class="back-btn">
+        <a href="../../../">Back</a>
+    </div>
+</body>
+</html>

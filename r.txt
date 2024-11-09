@@ -1,0 +1,466 @@
+Flask==2.1.3
+Flask-MySQLdb
+Flask-Login
+Werkzeug==2.2.2
+mysql-connector-python
+mysql -u root -proot auction < database.sql C:\Users\User\PycharmProjects\AUCTION\database.sql
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            flex-direction: column; /* Align items in a column */
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+            text-align: center;
+            margin: 20px 0; /* Adjusted margin */
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .alert {
+            font-size: 16px;
+            color: #fff;
+            background: #28a745; /* Green color for alerts */
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .dashboard-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .dashboard-links a {
+            display: block;
+            padding: 10px;
+            background-color: #28a745; /* Green color for links */
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .dashboard-links a:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        .logout-btn {
+            margin-top: 20px;
+        }
+
+        .logout-btn a {
+            display: block;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #dc3545; /* Red color for logout */
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .logout-btn a:hover {
+            background-color: #bd2130; /* Darker red on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <!-- Display flashed messages as alerts -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="alert">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <ul class="dashboard-links">
+        <li><a href="../../change-password">Change Password</a></li>
+        <li><a href="{{ url_for('admin_buyers') }}">Buyers</a></li>
+        <li><a href="{{ url_for('admin_sellers') }}">Sellers</a></li>
+        <li><a href="{{ url_for('approveseller') }}">Approve Sellers</a></li>
+        <li><a href="{{ url_for('wallet_transaction_history') }}">Transaction History</a></li>
+    </ul>
+
+    <div class="logout-btn">
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seller Dashboard</title>
+</head>
+<body>
+
+    <h1>Seller Dashboard</h1>
+<!-- Display flashed messages as alerts -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="alert">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <p>wallet: {{ user[8] }}</p>
+    <a href="{{ url_for('add_product') }}">Add Products</a><br>
+    <a href="{{ url_for('view_products') }}">View Products</a><br>
+    <div>
+     <a href="{{ url_for('wallet_transaction_history') }}">Transcation history</a>
+    <a href="{{ url_for('view_products_in_auction') }}" class="btn btn-secondary">View Your Products in Auction</a>
+</div>
+
+    <a href="{{ url_for('change_password') }}">Change Password</a><br>
+    <a href="{{ url_for('logout') }}">Logout</a><br>
+</body>
+</html>
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+
+
+    <h2>Sellers</h2>
+    <ul>
+        {% for seller in sellers %}
+            <li>
+                {{ seller[1] }}
+                <a href="/admin/view/seller/{{ seller[0] }}">View</a>
+                <a href="/admin/edit/seller/{{ seller[0] }}">Edit</a>
+                <a href="/admin/delete/seller/{{ seller[0] }}">Delete</a>
+                <a href="{{ url_for('list_auctions_for_seller',seller_id=seller[0]) }}">Auctions</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auctions List for Seller</title>
+</head>
+<body>
+    <h1>Auctions List for Seller</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Auction ID</th>
+                <th>Product Name</th>
+                <th>Starting Price</th>
+                <th>End Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for auction in auctions %}
+                <tr>
+                    <td>{{ auction[0] }}</td>  <!-- Auction ID -->
+                    <td>{{ auction[1] }}</td>  <!-- Product Name -->
+                    <td>${{ auction[2] }}</td>  <!-- Starting Price -->
+                    <td>{{ auction[3] }}</td>  <!-- End Time -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+        <!-- Display flashed messages as alerts -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="alert">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <table>
+        <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Proof of Document</th>
+            <th>Approve</th>
+        </tr>
+        {% for user_data in pending_seller_data %}
+            <tr>
+                <td>{{ user_data[0] }}</td>
+                <td>{{ user_data[1] }}</td>
+                <td>{{ user_data[2] }}</td>
+                <td>
+                    <a href="{{ url_for('serve_image', filename=user_data[3]) }}" target="_blank">
+    <img src="{{ url_for('serve_image', filename=user_data[3]) }}" alt="Proof of Document">
+</a>
+
+                </td>
+                <td>
+                    <form method="POST" action="/admin/approve_seller/{{ user_data[0] }}">
+                        <input type="submit" value="Approve">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+<a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seller Dashboard</title>
+</head>
+<body>
+
+    <h1>Seller Dashboard</h1>
+<!-- Display flashed messages as alerts -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="alert">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <p>wallet: {{ user[8] }}</p>
+    <a href="{{ url_for('add_product') }}">Add Products</a><br>
+    <a href="{{ url_for('view_products') }}">View Products</a><br>
+    <div>
+     <a href="{{ url_for('wallet_transaction_history') }}">Transcation history</a>
+    <a href="{{ url_for('view_products_in_auction') }}" class="btn btn-secondary">View Your Products in Auction</a>
+</div>
+
+    <a href="{{ url_for('change_password') }}">Change Password</a><br>
+    <a href="{{ url_for('logout') }}">Logout</a><br>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Product</title>
+</head>
+<body>
+    <h1>Add Product</h1>
+    <form method="POST" action="" enctype="multipart/form-data">
+        <label for="name">Product Name</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="description">Product Description</label>
+        <textarea id="description" name="description"></textarea><br>
+        <label for="document">image</label>
+        <input type="file" id="document" name="document"><br>
+        <input type="submit" value="Add Product">
+    </form>
+</body>
+</html>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product[1] }}</td>
+                <td>{{ product[2] }}</td>
+                <td>
+                    {% if product[4] %}
+                        <img src="{{ url_for('serve_image1', filename=product[4]) }}" alt="{{ product[1] }}" width="100" height="100">
+                    {% else %}
+                        No Image Available
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('add_to_auction1', product_id=product[0]) }}" class="btn btn-primary">Add to Auction</a>
+                    <a href="{{ url_for('delete_product', product_id=product[0]) }}" class="btn btn-danger">Delete Product</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Auction End Time</th>
+            <th>Base Price</th>
+            <th>Current Bid Price</th>
+            <th>Winner</th>
+            <th>Winning Bid Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for auction in products_in_auction %}
+            <tr>
+                <td>{{ auction[1] }}</td>
+                <td>{{ auction[8] }}</td>
+                <td>${{ auction[12] }}</td>
+                <td>${{ auction[10] }}</td>
+                {% if auction[9] %}
+                    <td>User {{ auction[9] }}</td>
+                    <td>${{ auction[10] }}</td>
+                {% else %}
+                    <td>No Winner</td>
+                    <td>N/A</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Product to Auction</title>
+</head>
+<body>
+    <h1>Add Product to Auction</h1>
+
+    <form method="POST" action="{{ url_for('add_to_auction', product_id=product_id) }}">
+        <label for="end_date">Auction End Date:</label>
+        <input type="date" id="end_date" name="end_date" required>
+
+        <label for="base_price">Base Price:</label>
+        <input type="number" step="0.01" id="base_price" name="base_price" required>
+
+        <label for="category">Select Category:</label>
+        <select id="category" name="category" required>
+            {% for category in categories %}
+                <option value="{{ category[0] }}">{{ category[1] }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Include the product_id from the URL as a hidden input field -->
+        <input type="hidden" name="product_id" value="{{ product_id }}">
+
+        <button type="submit">Add to Auction</button>
+    </form>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bidding Page</title>
+</head>
+<body>
+    <h1>{{ product_data[1] }} - Bidding Page</h1>
+    <p>Description: {{ product_data[2] }}</p>
+    <p>Base Price: ${{ auction_data[7] }}</p>
+    <p>Auction End Time: {{ auction_data[3] }}</p>
+
+    {% if bids %}
+        <h2>All Bids:</h2>
+        <ul>
+            {% for bid in bids %}
+                <li>User {{ bid[6] }} bid ${{ bid[4] }} at {{ bid[3] }}</li>
+            {% endfor %}
+        </ul>
+        <p>Highest Bid: ${{ highest_bid[4] }} by User {{ highest_bid[2] }}</p>
+    {% else %}
+        <p>No bids have been placed on this product.</p>
+    {% endif%}
+
+    {% if current_time >= auction_data[3] %}
+        <!-- Auction has ended, show winner and bid amount -->
+        {% if auction_data[4] %}
+            <p>Winner: User {{ auction_data[4] }}</p>
+            <p>Winning Bid Amount: ${{ auction_data[5] }}</p>
+        {% else %}
+            <p>No Winner</p>
+        {% endif %}
+    {% else %}
+        <!-- Auction is still ongoing, show bid form -->
+        <form method="post" action="">
+            <label for="bid_amount">Bid Amount:</label>
+            <input type="number" step="0.01" name="bid_amount" required>
+            <button type="submit">Place Bid</button>
+        </form>
+    {% endif %}
+</body>
+</html>
+
+

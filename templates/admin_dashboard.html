@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            flex-direction: column; /* Align items in a column */
+        }
+
+
+                 /* New style for the home button */
+        .home-btn {
+            margin-bottom: 10px; /* Add space between home button and other links */
+        }
+
+        .home-btn a {
+            display: block;
+            padding: 10px 40px;
+            font-size: 16px;
+            background-color: #28a745; /* Blue color for home button */
+            color: #218838;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .home-btn a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+            text-align: center;
+            margin: 20px 0; /* Adjusted margin */
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .alert {
+            font-size: 16px;
+            color: #fff;
+            background: #ffffff; /* Green color for alerts */
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .dashboard-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .dashboard-links a {
+            display: block;
+            padding: 10px;
+            background-color: #28a745; /* Green color for links */
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .dashboard-links a:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        .logout-btn {
+            margin-top: 20px;
+        }
+
+        .logout-btn a {
+            display: block;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #dc3545; /* Red color for logout */
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .logout-btn a:hover {
+            background-color: #bd2130; /* Darker red on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <!-- Display flashed messages as alerts -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="alert">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+
+
+
+
+
+
+
+
+
+    <!-- Add the home button before the h1 heading -->
+    <div class="home-btn">
+        <a href="{{ url_for('homepage') }}">Home</a>
+    </div>
+
+
+
+
+
+
+
+
+
+    <ul class="dashboard-links">
+        <li><a href="../../change-password">Change Password</a></li>
+        <li><a href="{{ url_for('admin_buyers') }}">Buyers</a></li>
+        <li><a href="{{ url_for('admin_sellers') }}">Sellers</a></li>
+        <li><a href="{{ url_for('approveseller') }}">Approve Sellers</a></li>
+        <li><a href="{{ url_for('wallet_transaction_history') }}">Transaction History</a></li>
+    </ul>
+
+    <div class="logout-btn">
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+ <button onclick="goBack()">Go Back</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <div class="back-btn">
+        <a href="../../../">HOME</a>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

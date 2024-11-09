@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            flex-direction: column; /* Align items in a column */
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .alert {
+            font-size: 16px;
+            color: #26aa07;
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        a {
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #26aa07;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        a:hover {
+            background-color: #497228;
+        }
+
+        .btn-secondary {
+            background-color: #26aa07;
+        }
+
+        .btn-secondary:hover {
+            background-color: #497228;
+        }
+
+        div {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Seller Dashboard</h1>
+
+    <!-- Display flashed messages as alerts -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="alert">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <p>Wallet: {{ user[8] }}</p>
+
+    <a href="{{ url_for('add_product') }}">Add Products</a>
+    <a href="{{ url_for('view_products') }}">View Products</a>
+
+    <div>
+        <a href="{{ url_for('wallet_transaction_history') }}">Transaction History</a>
+        <a href="{{ url_for('view_products_in_auction') }}" class="btn btn-secondary">View Your Products in Auction</a>
+    </div>
+
+    <a href="{{ url_for('change_password') }}">Change Password</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+<button onclick="goBack()">Go Back</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <div class="back-btn">
+        <a href="../../../">HOME</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>User Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: rgba(40, 167, 69, 0.9); /* Green background color with reduced opacity */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .user-details-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 60%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #28a745; /* Green color for header text */
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            margin: 10px 0;
+        }
+
+        .back-button {
+            font-size: 16px;
+            color: #28a745; /* Green color for back button */
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="user-details-container">
+        <h1>User Details</h1>
+        <p>User ID: {{ user[0] }}</p>
+        <p>Username: {{ user[1] }}</p>
+        <p>Email: {{ user[4] }}</p>
+        <p>Address: {{ user[5] }}</p>
+        <p>Status: {{ user[7] }}</p>
+        <p>Wallet: {{ user[8] }}</p>
+
+        <a class="back-button" href="javascript:history.back()">Back</a>
+
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <div class="back-btn">
+        <a href="../../../">HOME</a>
+    </div>
+    </div>
+</body>
+</html>
